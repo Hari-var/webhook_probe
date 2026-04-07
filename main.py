@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routes import hook_probe
+from routes import hook_probe, logs
 
 app = FastAPI()
 app.add_middleware(
