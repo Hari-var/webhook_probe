@@ -28,16 +28,16 @@ IMPORTANT RULES:
 
 Response Format:
 
-{
+{{
   "comments": [
-    {
+    {{
       "body": "Comment text",
       "path": "file_path",
       "line": line_number,
       "side": "RIGHT"
-    }
+    }}
   ]
-}
+}}
 
 Rules:
 - "body" → PR comment text
@@ -49,9 +49,9 @@ If multiple issues exist, return multiple comments.
 
 If no issues found, return:
 
-{
+{{
   "comments": []
-}
+}}
 
 ---
 
