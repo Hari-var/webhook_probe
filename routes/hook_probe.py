@@ -122,7 +122,6 @@ async def handle_webhook(request: Request):
             path=comment.path,
             line=comment.line,
             body=comment.body,
-            start_line=comment.start_line,
             start_side="Right",
             side="Right",
         )
