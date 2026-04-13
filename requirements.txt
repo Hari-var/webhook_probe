@@ -7,4 +7,3 @@ pydantic
 dotenv
 httpx
 google-generativeai
-ast
