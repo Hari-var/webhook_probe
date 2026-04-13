@@ -117,7 +117,7 @@ async def handle_webhook(request: Request):
         await add_pr_comment(
             owner=repo_owner,
             repo=repo_name,
-            pull_number=pr.id,
+            pull_number=payload.number,
             commit_id=head_sha,
             path=comment.path,
             line=comment.line,

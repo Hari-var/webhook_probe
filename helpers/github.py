@@ -1,4 +1,5 @@
 import httpx
+import asyncio
 from helpers.config import github_token
 from helpers.logger import get_logger
 
@@ -16,7 +17,7 @@ async def add_pr_comment(
     start_side="RIGHT",
     side="RIGHT",
 ):
-    url = f"https://api.github.com/repos/{owner}/{repo}/pulls/{pull_number}/comments"
+    url = f"https://api.github.com/repos/{owner}/{repo}/pulls/{pull_number}/reviews"
 
     headers = {
         "Accept": "application/vnd.github+json",
@@ -41,3 +42,25 @@ async def add_pr_comment(
     logger.info(f"PR-comment added response: {response}")
 
     return response.json()
+
+if __name__ == "__main__":
+    owner = input("Enter repo owner: ")
+    repo = input("Enter repo name: ")
+    pull_number = int(input("Enter pull request number: "))
+    commit_id = input("Enter commit ID: ")
+    path = input("Enter file path for comment: ")
+    body = input("Enter comment body: ")
+    line = int(input("Enter line number for comment: "))
+
+    response = asyncio.run(
+        add_pr_comment(
+            owner=owner,
+            repo=repo,
+            pull_number=pull_number,
+            commit_id=commit_id,
+            path=path,
+            line=line,
+            body=body
+        )
+    )
+    print("Comment added:", response)

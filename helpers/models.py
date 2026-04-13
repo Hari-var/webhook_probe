@@ -42,6 +42,7 @@ class PullRequest(BaseModel):
 
 class WebhookPayload(BaseModel):
     action: str
+    number: int
     pull_request: PullRequest
     repository: Repository
 
