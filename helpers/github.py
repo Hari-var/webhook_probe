@@ -13,7 +13,6 @@ async def add_pr_comment(
     path,
     line,
     body,
-    start_line=None,
     start_side="RIGHT",
     side="RIGHT",
 ):
