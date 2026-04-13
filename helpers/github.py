@@ -32,10 +32,6 @@ async def add_pr_comment(
         "side": side,
     }
 
-    if start_line:
-        payload["start_line"] = start_line
-        payload["start_side"] = start_side
-
     async with httpx.AsyncClient() as client:
         response = await client.post(url, headers=headers, json=payload)
     logger.info(f"PR-comment added response: {response}")
