@@ -3,3 +3,8 @@ uvicorn
 pathlib
 logging
 requests
+pydantic
+dotenv
+httpx
+google-generativeai
+ast
