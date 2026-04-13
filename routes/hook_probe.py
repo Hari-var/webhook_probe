@@ -35,7 +35,7 @@ async def handle_webhook(request: Request):
 
     compare_url = repo.compare_url.replace("{base}", base_sha).replace("{head}", head_sha)
 
-    diff_data = get_data(repo.diff_url)
+    diff_data = get_data(pr.diff_url)
     compare_data = parse_compare_response(compare_url)
 
     # pull_request = body.get("pull_request")
