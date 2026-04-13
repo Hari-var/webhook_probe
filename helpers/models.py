@@ -18,7 +18,6 @@ class Repository(BaseModel):
     id: int
     name: str
     private: bool
-    diff_url: Optional[str]
     compare_url: str
     owner: RepoOwner
 
@@ -35,6 +34,7 @@ class PullRequest(BaseModel):
     body: Optional[str]
     locked: bool
     comments_url: str
+    diff_url: Optional[str]
     user: User
     head: Branch
     base: Branch
