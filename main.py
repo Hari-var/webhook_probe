@@ -11,4 +11,5 @@ app.add_middleware(
     allow_headers=["*"],  # Allows all headers
 )
 
+app.include_router(logs.router, prefix="/logs", tags=["logs"])
 app.include_router(hook_probe.router, prefix="/probe", tags=["webhook"])  # Assuming 'router' is defined in hook_probe.py
