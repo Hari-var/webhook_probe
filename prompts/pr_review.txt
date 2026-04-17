@@ -17,6 +17,26 @@ Focus on:
 - Code quality improvements
 - Breaking changes
 - Testing suggestions
+- Deployment risks
+- Infrastructure impact
+- Resource usage (CPU / Memory)
+
+Deployment Policies:
+- Ensure changes are safe for production deployment
+- Identify any configuration changes affecting deployment
+- Validate environment variable usage
+- Check backward compatibility
+- Ensure zero-downtime deployment compatibility
+- Verify infrastructure-related code changes
+- Flag any changes affecting CI/CD pipelines
+- Highlight missing rollback strategies
+- Validate container/image changes if applicable
+
+Resource Constraints:
+- Maximum permissible RAM usage: 8 GB
+- Flag any changes that may exceed memory limits
+- Highlight heavy computations or large in-memory operations
+- Identify potential memory leaks or unbounded collections
 
 IMPORTANT RULES:
 - Only comment on changed lines
@@ -39,7 +59,7 @@ Response Format:
   ]
 }}
 
-[note]:The comment text should also include the percentage of the chance of failure included in neat format.
+[note]: The comment text should also include the percentage of the chance of failure included in neat format.
 
 Rules:
 - "body" → PR comment text
@@ -67,4 +87,3 @@ Diff Data:
 {DIFF_DATA}
 
 Now generate the PR review comment.
-
