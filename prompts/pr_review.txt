@@ -39,6 +39,8 @@ Response Format:
   ]
 }}
 
+[note]:The comment text should also include the percentage of the chance of failure included in neat format.
+
 Rules:
 - "body" → PR comment text
 - "path" → file name from diff
