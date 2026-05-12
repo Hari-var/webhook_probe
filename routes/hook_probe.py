@@ -1,9 +1,9 @@
-from fastapi import APIRouter, Request #typr: ignore
+from fastapi import APIRouter, Request #type: ignore
 from helpers.logger import get_logger
 import requests
 from helpers.data_processor import parse_compare_response
 from helpers.requester import get_data
-from llm.llms import get_gemini_response, get_azure_response
+from llm.llms import get_azure_response
 from helpers.promptManager import PromptManager
 from helpers.github import add_pr_comment
 

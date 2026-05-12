@@ -7,3 +7,6 @@ pydantic
 dotenv
 httpx
 google-generativeai
+openai
+sqlalchemy
+psycopg2
