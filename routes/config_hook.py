@@ -51,9 +51,8 @@ async def run_flow2(request: Request):
 
     if response.status_code != 200:
         raise HTTPException(status_code=502, detail=f"Failed to fetch config file: {response.status_code}")
-    raw_config = json.dumps(response.text, indent=4)
     try:
-        validated_config = ConfigValidator(**json.loads(raw_config))
+        validated_config = ConfigValidator(**json.loads(response.text))
     except Exception as e:
         raise HTTPException(status_code=422, detail=f"Invalid config format: {e}")
 
