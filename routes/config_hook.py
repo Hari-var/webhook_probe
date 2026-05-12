@@ -29,7 +29,9 @@ def _find_config_file(commits: list) :
 
 @router.post("/run_flow2")
 async def run_flow2(request: Request):
+    print(request)
     data = await request.json()
+    print(data)
     commits = data.get("commits", [])
     repo_name = data.get("repository", {}).get("full_name", "")
     ref = data.get("ref", "").replace("refs/heads/", "")
