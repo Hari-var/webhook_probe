@@ -9,3 +9,4 @@ httpx
 google-generativeai
 openai
 sqlalchemy
+psycopg2
