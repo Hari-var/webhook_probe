@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request #typr: ignore
+from fastapi import APIRouter, Request #type: ignore
 from helpers.logger import get_logger
 import requests
 from helpers.data_processor import parse_compare_response

@@ -8,12 +8,14 @@ from database.sql import save_approval
 from helpers.data_processor import text_to_json
 from models.config_validator_model import ConfigValidator
 from models.sql_request_response_models import ConfigDetailsRequest
+from helpers.json_beautify import beautify_json
+import json
 
 router = APIRouter()
 
 
 
-_CONFIG_PATTERN = re.compile(r'.*config.*\.py$')
+_CONFIG_PATTERN = re.compile(r'.*config.*\.json$')
 
 def _find_config_file(commits: list) :
     changed_files = [file for commit in commits for file in commit.get("modified", []) + commit.get("added", [])]
@@ -47,9 +49,9 @@ async def run_flow2(request: Request):
 
     if response.status_code != 200:
         raise HTTPException(status_code=502, detail=f"Failed to fetch config file: {response.status_code}")
-    raw_config = loads(text_to_json(response.text))
+    raw_config = json.dumps(response.text, indent=4)
     try:
-        validated_config = ConfigValidator(**raw_config)
+        validated_config = ConfigValidator(**json.loads(raw_config))
     except Exception as e:
         raise HTTPException(status_code=422, detail=f"Invalid config format: {e}")
 
