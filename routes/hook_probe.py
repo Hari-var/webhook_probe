@@ -1,9 +1,9 @@
-from fastapi import APIRouter, Request 
+from fastapi import APIRouter, Request #typr: ignore
 from helpers.logger import get_logger
 import requests
 from helpers.data_processor import parse_compare_response
 from helpers.requester import get_data
-from llm.llms import get_gemini_response
+from llm.llms import get_gemini_response, get_azure_response
 from helpers.promptManager import PromptManager
 from helpers.github import add_pr_comment
 
@@ -107,8 +107,8 @@ async def handle_webhook(request: Request):
     pm = PromptManager()
     prompt = pm.format("pr_review", PR_METADATA=pr.model_dump(), COMPARE_DATA=compare_data, DIFF_DATA=diff_data)
 
-    response =  get_gemini_response(prompt)
-    logger.info("Gemini response:", response)
+    response =  get_azure_response(prompt)
+    logger.info("Azure response:", response)
     from json import loads
     parsed = LLMResponse(**loads(
         response.replace("```json", "").replace("```", "")

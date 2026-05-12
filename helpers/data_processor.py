@@ -11,6 +11,7 @@ def parse_compare_response(compare_url, token=None):
         headers["Authorization"] = f"Bearer {token}"
 
     response = get_data(compare_url, headers=headers)
+    response = " " if response is None else response
 
     data = json.loads(response)
 
@@ -44,6 +45,47 @@ def parse_compare_response(compare_url, token=None):
         })
 
     return parsed
+
+def text_to_json(text):
+    """
+    Convert Python-style variable assignments in a string to JSON.
+    
+    Example input:
+    TENANT_ID = "abc"
+    ENABLE_SAST = True
+    """
+    config = {}
+    for line in text.splitlines():
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue  # skip empty lines and comments
+        if "=" not in line:
+            continue  # skip invalid lines
+        key, value = line.split("=", 1)
+        key = key.strip()
+        value = value.strip()
+        
+        # Convert string values
+        if value.startswith('"') and value.endswith('"') or value.startswith("'") and value.endswith("'"):
+            value = value[1:-1]
+        # Convert booleans
+        elif value.lower() == "true":
+            value = True
+        elif value.lower() == "false":
+            value = False
+        # Convert numbers
+        else:
+            try:
+                if "." in value:
+                    value = float(value)
+                else:
+                    value = int(value)
+            except ValueError:
+                pass  # leave as string if cannot parse
+        
+        config[key] = value
+    
+    return json.dumps(config, indent=4)
 
 if  __name__ == "__main__":
     compare_url = input("Enter compare URL: ")
