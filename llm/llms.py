@@ -47,7 +47,7 @@ def get_azure_response(text):
         deployment = azure_model
         subscription_key = azure_ai_api_key
         api_version = azure_api_version
- 
+        print(endpoint, deployment, subscription_key, api_version)
         if not subscription_key:
             return "Error: AZURE_OPENAI_KEY not found in environment variables"
  

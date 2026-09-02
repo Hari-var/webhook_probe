@@ -11,6 +11,8 @@ from models.sql_request_response_models import ConfigDetailsRequest
 from helpers.json_beautify import beautify_json
 import json
 
+from helpers.github import store_webhook_response
+
 router = APIRouter()
 
 
@@ -25,6 +27,15 @@ def _find_config_file(commits: list) :
         if _CONFIG_PATTERN.search(file):
             return file, changed_files
     return None, changed_files
+
+
+@router.post("/probe")
+async def probe(request: Request):
+    data = await request.json()
+    repo_name = data.get("repository", {}).get("full_name", "unknown")
+    commit_sha = data.get("head_commit", {}).get("id", "unknown")
+    await store_webhook_response(repo_name, commit_sha, data)
+    return {"status": "stored", "path": f"hook_responses/{repo_name}/{commit_sha}.json"}
 
 
 @router.post("/run_flow2")
