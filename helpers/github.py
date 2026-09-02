@@ -6,6 +6,7 @@ from helpers.logger import get_logger
 logger = get_logger(__name__)
 
 async def store_webhook_response(repo_name: str, commit_sha: str, payload: dict):
+    import base64, json
     path = f"hook_responses/{repo_name}/{commit_sha}.json"
     url = f"https://api.github.com/repos/Hari-var/test1/contents/{path}"
     headers = {
@@ -13,19 +14,18 @@ async def store_webhook_response(repo_name: str, commit_sha: str, payload: dict)
         "Authorization": f"Bearer {github_token}",
         "X-GitHub-Api-Version": "2022-11-28",
     }
-    import base64, json
     content = base64.b64encode(json.dumps(payload, indent=2).encode()).decode()
 
     async with httpx.AsyncClient() as client:
         get_resp = await client.get(url, headers=headers)
-        sha = get_resp.json().get("sha") if get_resp.status_code == 200 else None
-
-        body = {"message": f"store webhook response for {commit_sha}", "content": content}
-        if sha:
-            body["sha"] = sha
+        if get_resp.status_code == 200:
+            existing_sha = get_resp.json().get("sha")
+            body = {"message": f"update webhook response for {commit_sha}", "content": content, "sha": existing_sha}
+        else:
+            body = {"message": f"store webhook response for {commit_sha}", "content": content}
         response = await client.put(url, headers=headers, json=body)
 
-    logger.info(f"Stored webhook response: {response.status_code}")
+    logger.info(f"Stored webhook response: {response.status_code} - {response.text}")
     return response.json()
 
 
